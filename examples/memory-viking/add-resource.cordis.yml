@@ -1,0 +1,11 @@
+# Opt-in Consumer: model-facing tools for registering local files / directories /
+# Git repos / URLs into OpenViking memory, with persistent watch tracking.
+# Requires the OV MCP overlay (examples/mcp-memory/openviking.cordis.yml)
+# to be active first.
+- insert:
+    - id: add-resource
+      name: '@deepseek-ai/dsh-add-resource'
+      config:
+        apiKey: ''
+        watchStorePath: 'C:/Users/Dustin/.dsh/ov-watches.json'
+        timeoutMs: 60000

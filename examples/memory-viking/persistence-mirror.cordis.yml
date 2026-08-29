@@ -1,0 +1,13 @@
+# Opt-in Provider: one-way mirrors `session/event` into OpenViking under
+# `viking://user/<userId>/memories/<sessionId>/<seq>-<type>.md`. SQLite
+# session-persistence remains the authoritative store; this plugin is a cache.
+# Requires the OV MCP overlay to be active first.
+- insert:
+    - id: session-persistence-viking
+      name: '@deepseek-ai/dsh-session-persistence-viking'
+      config:
+        userScope: memories
+        scope: {}
+        maxConcurrentWrites: 4
+        excludedEventTypes:
+          - heartbeat

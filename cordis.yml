@@ -1,0 +1,63 @@
+# DSH ↔ OpenViking bridge: single-overlay plugin entry.
+#
+# Activates six layers on a host DSH that already has the sibling packages linked.
+# Use ./restore.sh to apply the siblings + modifications to a fresh DSH checkout.
+#
+# Usage:
+#   pnpm dsh web --patch "$PWD/cordis.yml" --host 127.0.0.1 --port 3080
+#
+# Requires: OPENVIKING_API_KEY (default dev key: ov-dev-local-DO-NOT-USE-IN-PROD).
+- insert:
+    - id: memory-openviking
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: openviking
+        transport: streamable-http
+        url: 'http://127.0.0.1:1933/mcp'
+        headers:
+          Authorization: !!js "`Bearer ${process.env.OPENVIKING_API_KEY}`"
+          X-OpenViking-Account: !!js "process.env.OPENVIKING_ACCOUNT ?? 'default'"
+          X-OpenViking-User: !!js "process.env.OPENVIKING_USER ?? 'default'"
+        failOnStartupError: false
+        reconnect:
+          enabled: true
+          initialDelayMs: 500
+          maxDelayMs: 30000
+          maxAttempts: 10
+- insert:
+    - id: memory-auto-recall
+      name: '@deepseek-ai/dsh-memory-auto-recall'
+      config:
+        maxTokens: 800
+        memorySearchTool: find
+        searchLimit: 3
+        recallBudget: 4000
+- insert:
+    - id: memory-auto-capture
+      name: '@deepseek-ai/dsh-memory-auto-capture'
+      config:
+        maxMessagesPerTurn: 32
+        maxCharsPerMessage: 4000
+        mirrorWrites: true
+- insert:
+    - id: session-persistence-viking
+      name: '@deepseek-ai/dsh-session-persistence-viking'
+      config:
+        userScope: memories
+        scope: {}
+        maxConcurrentWrites: 4
+        excludedEventTypes:
+          - heartbeat
+- insert:
+    - id: add-resource
+      name: '@deepseek-ai/dsh-add-resource'
+      config:
+        apiKey: ''
+        watchStorePath: 'C:/Users/Dustin/.dsh/ov-watches.json'
+        timeoutMs: 60000
+- insert:
+    - id: session-search-viking
+      name: '@deepseek-ai/dsh-session-search-viking'
+      config:
+        maxMessagesPerSession: 64
+        maxCharsPerMessage: 4000

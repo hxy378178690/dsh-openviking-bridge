@@ -1,0 +1,22 @@
+# Opt-in reference for OpenViking 0.4.14. Point DSH at an already-running
+# OpenViking server; storage, embedding, and identity are OpenViking-owned.
+# Identity headers (X-OpenViking-Account / X-OpenViking-User) are resolved
+# into OpenViking contextvars; viking://user/<id>/... paths are filled in
+# server-side, so callers do not pass userId.
+- insert:
+    - id: memory-openviking
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: openviking
+        transport: streamable-http
+        url: 'http://127.0.0.1:1933/mcp'
+        headers:
+          Authorization: !!js "`Bearer ${process.env.OPENVIKING_API_KEY}`"
+          X-OpenViking-Account: !!js "process.env.OPENVIKING_ACCOUNT ?? 'default'"
+          X-OpenViking-User: !!js "process.env.OPENVIKING_USER ?? 'default'"
+        failOnStartupError: false
+        reconnect:
+          enabled: true
+          initialDelayMs: 500
+          maxDelayMs: 30000
+          maxAttempts: 10

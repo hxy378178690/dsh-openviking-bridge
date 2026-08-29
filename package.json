@@ -1,0 +1,52 @@
+{
+  "name": "@deepseek-ai/dsh-openviking-bridge",
+  "description": "DSH ↔ OpenViking bridge: complete restore bundle for the six-sibling plugin family plus a single-overlay cordis.yml that activates them all.",
+  "version": "0.1.0-rc.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "cordis.yml",
+  "exports": {
+    ".": "./cordis.yml",
+    "./cordis.yml": "./cordis.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "cordis.yml",
+    "packages/",
+    "examples/",
+    "dsh-modifications/",
+    "ui-modifications/",
+    "restore.sh",
+    "README.md"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "plugin": {
+      "name": "@deepseek-ai/dsh-openviking-bridge",
+      "scope": "memory",
+      "description": "Single-overlay activation of the full DSH ↔ OpenViking bridge. Use ./restore.sh to apply six sibling packages, modifications, and patches to a fresh DSH checkout.",
+      "configs": [
+        {
+          "id": "openviking-bridge",
+          "path": "./cordis.yml",
+          "requires": [
+            "@deepseek-ai/dsh-mcp-client",
+            "@deepseek-ai/dsh-memory-auto-recall",
+            "@deepseek-ai/dsh-memory-auto-capture",
+            "@deepseek-ai/dsh-openviking-mcp",
+            "@deepseek-ai/dsh-session-persistence-viking",
+            "@deepseek-ai/dsh-add-resource",
+            "@deepseek-ai/dsh-session-search-viking"
+          ],
+          "defaultConfig": {
+            "serverName": "openviking",
+            "transport": "streamable-http",
+            "url": "http://127.0.0.1:1933/mcp"
+          }
+        }
+      ]
+    }
+  }
+}

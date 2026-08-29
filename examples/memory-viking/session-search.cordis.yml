@@ -1,0 +1,11 @@
+# Opt-in Consumer: at session/end-seed, write a session-content index into
+# OpenViking under viking://user/<user>/sessions/<sessionId>/index-<utc>.md so
+# future model turns can find past-session context via mcp__openviking__find / search.
+# Requires the OV MCP overlay (examples/mcp-memory/openviking.cordis.yml)
+# to be active first.
+- insert:
+    - id: session-search-viking
+      name: '@deepseek-ai/dsh-session-search-viking'
+      config:
+        maxMessagesPerSession: 64
+        maxCharsPerMessage: 4000

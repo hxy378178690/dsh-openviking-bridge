@@ -1,0 +1,91 @@
+{
+  "version": 2,
+  "paths": {
+    "base": "D:\\聚合工具"
+  },
+  "aggregator": {
+    "host": "localhost",
+    "port": 4100,
+    "bindIPv4Fallback": "127.0.0.1",
+    "staticDir": "public",
+    "logDir": "logs",
+    "stateFile": "state.json"
+  },
+  "panels": {
+    "dsh": {
+      "label": "DSH",
+      "url": "http://localhost:3080",
+      "iframeWidth": 1280,
+      "fixedWidth": false
+    },
+    "openviking": {
+      "label": "OpenViking Studio",
+      "url": "http://localhost:1933/studio",
+      "defaultTab": true
+    },
+    "sag": {
+      "label": "SAG",
+      "url": "http://localhost:8089"
+    }
+  },
+  "services": {
+    "dsh": {
+      "exe": "pnpm.cmd",
+      "args": ["dsh", "web",
+        "--patch", "{base}/DSH/examples/mcp-memory/openviking.cordis.yml",
+        "--patch", "{base}/DSH/examples/memory-viking/auto-recall.cordis.yml",
+        "--patch", "{base}/DSH/examples/memory-viking/auto-capture.cordis.yml",
+        "--patch", "{base}/DSH/examples/memory-viking/persistence-mirror.cordis.yml",
+        "--host", "127.0.0.1", "--port", "3080"],
+      "cwd": "{base}/DSH",
+      "shell": true,
+      "env": {
+        "OPENVIKING_API_KEY": "ov-dev-local-DO-NOT-USE-IN-PROD",
+        "OPENVIKING_ACCOUNT": "default",
+        "OPENVIKING_USER": "default"
+      },
+      "port": 3080,
+      "healthPath": "/",
+      "autoStart": true,
+      "defaultOn": true
+    },
+    "openviking": {
+      "exe": "C:\\Users\\Dustin\\AppData\\Roaming\\Python\\Python313\\Scripts\\openviking-server.exe",
+      "args": ["--config", "D:\\OpenViking\\ov.conf"],
+      "port": 1933,
+      "healthPath": "/health",
+      "autoStart": true,
+      "defaultOn": true,
+      "logRotate": { "maxBytes": 52428800, "keep": 5 }
+    },
+    "sag": {
+      "api": {
+        "exe": "{base}/zleap-sag/apps/api/.venv/Scripts/python.exe",
+        "args": ["-m", "uvicorn", "sag_api.main:app", "--host", "127.0.0.1", "--port", "8088"],
+        "cwd": "{base}/zleap-sag/apps/api",
+        "port": 8088,
+        "healthPath": "/api/v1/system/health"
+      },
+      "web": {
+        "exe": "node.exe",
+        "args": ["{base}/zleap-sag/apps/web/node_modules/next/dist/bin/next", "dev", "-p", "8089", "-H", "127.0.0.1"],
+        "cwd": "{base}/zleap-sag/apps/web",
+        "env": { "NEXT_PUBLIC_API_BASE": "http://localhost:8088" },
+        "port": 8089,
+        "healthPath": "/login",
+        "loginPath": "/login"
+      },
+      "autoStart": true,
+      "defaultOn": true
+    },
+    "ollama": {
+      "exe": "C:\\Users\\Dustin\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "args": ["serve"],
+      "env": { "OLLAMA_MODELS": "D:\\ollama\\models" },
+      "port": 11434,
+      "healthPath": "/api/tags",
+      "autoStart": false,
+      "defaultOn": false
+    }
+  }
+}

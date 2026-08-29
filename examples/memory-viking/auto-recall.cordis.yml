@@ -1,0 +1,9 @@
+# Opt-in Consumer: every `agent/pre-step` waterfall pre-fetches OV `recall`
+# results and prepends them to the entering batch. Requires the OV MCP overlay
+# (`examples/mcp-memory/openviking.cordis.yml`) to be active first.
+- insert:
+    - id: memory-auto-recall
+      name: '@deepseek-ai/dsh-memory-auto-recall'
+      config:
+        maxTokens: 800
+        maxQueryChars: 800

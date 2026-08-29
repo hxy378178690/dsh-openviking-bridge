@@ -1,0 +1,10 @@
+# Opt-in Consumer: at every `turn/end`, the turn's user/assistant messages are
+# pushed through OV `remember`. Skips turns aborted or errored and skips any
+# turn whose session is mid-compaction. Requires the OV MCP overlay to be
+# active first.
+- insert:
+    - id: memory-auto-capture
+      name: '@deepseek-ai/dsh-memory-auto-capture'
+      config:
+        maxMessagesPerTurn: 32
+        maxCharsPerMessage: 4000
