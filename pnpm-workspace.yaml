@@ -1,0 +1,7 @@
+packages:
+  - packages/memory/openviking-mcp
+  - packages/memory/memory-auto-recall
+  - packages/memory/memory-auto-capture
+  - packages/memory/add-resource
+  - packages/session/session-persistence-viking
+  - packages/session/session-search-viking
