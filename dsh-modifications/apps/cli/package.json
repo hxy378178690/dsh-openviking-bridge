@@ -97,6 +97,7 @@
     "@deepseek-ai/dsh-openviking-mcp": "workspace:^",
     "@deepseek-ai/dsh-session": "workspace:^",
     "@deepseek-ai/dsh-session-persistence-viking": "workspace:^",
+    "@deepseek-ai/dsh-session-search-viking": "workspace:^",
     "@deepseek-ai/dsh-settings": "workspace:^",
     "@deepseek-ai/dsh-subagent": "workspace:^",
     "@deepseek-ai/dsh-system-prompt": "workspace:^",

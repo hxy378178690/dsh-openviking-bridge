@@ -1,4 +1,4 @@
-# DSH Edge App Launcher + Aggregator
+﻿# DSH Edge App Launcher + Aggregator
 # - 启动 DSH web (3080) + OpenViking (1933) + SAG (8088+8089) + 聚合服务器 (4100)
 # - Ollama 默认关，由聚合页 UI 上的开关启动 (11434)
 # - Edge --app 打开聚合页 http://localhost:4100
@@ -120,6 +120,8 @@ if (Test-Port $PORT_DSH) {
       '--patch', "$DSH_DIR/examples/memory-viking/auto-recall.cordis.yml",
       '--patch', "$DSH_DIR/examples/memory-viking/auto-capture.cordis.yml",
       '--patch', "$DSH_DIR/examples/memory-viking/persistence-mirror.cordis.yml",
+'--patch', "$DSH_DIR/examples/memory-viking/add-resource.cordis.yml",
+'--patch', "$DSH_DIR/examples/memory-viking/session-search.cordis.yml",
       '--host', '127.0.0.1', '--port', "$PORT_DSH") `
     -WorkingDirectory $DSH_DIR -WindowStyle Normal -PassThru | Out-Null
   if (-not (Wait-Port $PORT_DSH 60)) { Write-Host "[DSH] 60s 内未起"; pause; exit 1 }

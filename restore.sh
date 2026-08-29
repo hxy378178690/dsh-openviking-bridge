@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # restore.sh — apply DSH ↔ OpenViking bridge to a fresh DSH checkout.
 #
 # Usage:
@@ -106,6 +106,7 @@ new_deps = {
     '@deepseek-ai/dsh-openviking-mcp': 'workspace:^',
     '@deepseek-ai/dsh-session': 'workspace:^',
     '@deepseek-ai/dsh-session-persistence-viking': 'workspace:^',
+    '@deepseek-ai/dsh-session-search-viking': 'workspace:^',
 }
 added = []
 for name, ver in new_deps.items():
@@ -136,6 +137,7 @@ new_refs = [
     {'path': './packages/memory/memory-auto-recall'},
     {'path': './packages/memory/openviking-mcp'},
     {'path': './packages/session/session-persistence-viking'},
+    {'path': './packages/session/session-search-viking'},
 ]
 added = []
 for r in new_refs:
